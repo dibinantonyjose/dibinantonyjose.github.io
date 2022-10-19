@@ -27,4 +27,4 @@ jobs:
         with:
           folder: build # The folder the action should deploy.
           branch: gh-pages
-          token: ${{PERSONAL_ACCESS_TOKEN}}
+          token: ${{secrets.PERSONAL_ACCESS_TOKEN}}
