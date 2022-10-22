@@ -12,8 +12,7 @@ function App() {
           developer.
         </p>
         <p>
-          Apart from coding, I am mostly into books, films, and traveling.
-          I also write tech-related articles.
+          Apart from coding, I am mostly into books, films, and travel.
         </p>
       </div>
       <div>
@@ -25,7 +24,6 @@ function App() {
         <a href="https://github.com/dibinantonyjose" target="_blank" rel="noreferrer">github</a>
         <a href="https://gitlab.com/dibinantonyjose" target="_blank" rel="noreferrer">gitlab</a>
         <a href="https://stackoverflow.com/users/11405308/dibinantonyjose" target="_blank" rel="noreferrer">stack overflow</a>
-        <a href="https://medium.com/@dibinantonyjose" target="_blank" rel="noreferrer">medium</a>
         <a href="https://www.goodreads.com/dibinantonyjose" target="_blank" rel="noreferrer">goodreads</a>
         <a href="https://www.imdb.com/user/ur144606862/" target="_blank" rel="noreferrer">imdb</a>
         <a href="https://www.instagram.com/dibinantonyjose/" target="_blank" rel="noreferrer">instagram</a>
