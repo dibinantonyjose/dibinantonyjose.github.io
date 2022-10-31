@@ -16,7 +16,7 @@ function App() {
         </p>
       </div>
       <div>
-        <p>dibinantonyjose@gmail</p>
+        <p>dibinantonyjose@gmail.com</p>
       </div>
       <div className="contacts">
         <a href="https://twitter.com/dibinantonyjose" target="_blank" rel="noreferrer">twitter</a>
