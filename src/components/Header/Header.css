@@ -1,0 +1,33 @@
+header {
+  padding: 20px 20px;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  padding: 20px;
+}
+
+nav h1 {
+  flex-grow: 1;
+}
+
+nav ul {
+  font-size: var(--text-xl);
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+nav ul li a {
+  text-decoration: none;
+  font-size: var(--text-lg);
+  border-bottom: 1px solid var(--link-text-color);
+}
+
+nav ul li a:hover {
+  border-bottom: 1px solid var(--primary-text-color);
+}

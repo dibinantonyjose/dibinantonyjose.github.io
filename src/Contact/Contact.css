@@ -1,0 +1,11 @@
+.contact-list {
+  display: flex;
+  gap: 20px;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+.contact-list a {
+  font-size: var(--text-lg);
+}

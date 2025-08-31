@@ -1,6 +1,8 @@
+import "./Header.css";
+
 function Header() {
   return (
-    <Header>
+    <header>
       <nav>
         <h1>Dibin Jose</h1>
         <ul>
@@ -8,14 +10,14 @@ function Header() {
             <a href="#home">Home</a>
           </li>
           <li>
-            <a href="#about">About</a>
+            <a href="#about">Projects</a>
           </li>
           <li>
-            <a href="#contact">Contact</a>
+            <a href="#contact">Blogs</a>
           </li>
         </ul>
       </nav>
-    </Header>
+    </header>
   );
 }
 

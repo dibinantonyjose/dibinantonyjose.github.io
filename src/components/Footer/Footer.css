@@ -1,0 +1,8 @@
+footer {
+  text-align: center;
+}
+
+footer p {
+  font-size: var(--text-xs);
+  color: var(--secondary-text-color);
+}
