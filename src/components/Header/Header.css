@@ -22,12 +22,12 @@ nav ul {
   align-items: center;
 }
 
-nav ul li a {
+nav ul li {
   text-decoration: none;
   font-size: var(--text-lg);
   border-bottom: 1px solid var(--link-text-color);
 }
 
-nav ul li a:hover {
+nav ul li:hover {
   border-bottom: 1px solid var(--primary-text-color);
 }
