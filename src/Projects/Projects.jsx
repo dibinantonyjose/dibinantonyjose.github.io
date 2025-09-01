@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "./Projects.css";
 const modules = import.meta.glob("../assets/projects/*.mdx");
 
@@ -20,15 +21,21 @@ function Projects() {
   }, []);
 
   return (
-    <>
+    <section className="project-page">
       {projects.map((project) => (
         <div key={project.path} className="project-list">
-          <p>{project.metaData?.date}</p>
-          <h3>{project.metaData?.title}</h3>
-          <p>{project.metaData?.description}</p>
+          <p className="project-meta project-date">{project.metaData?.date}</p>
+          <Link
+            to={project.path
+              .replace("../assets/projects/", "")
+              .replace(".mdx", "")}
+          >
+            <h3 className="link-class">{project.metaData?.title}</h3>
+          </Link>
+          <p className="project-meta">{project.metaData?.description}</p>
         </div>
       ))}
-    </>
+    </section>
   );
 }
 

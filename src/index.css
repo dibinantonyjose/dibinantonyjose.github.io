@@ -35,7 +35,7 @@ body {
 }
 
 main {
-  margin: 35px 107px;
+  margin: 35px 170px;
   background-color: var(--primary-background-color);
   padding: 69px 109px;
 }
@@ -104,4 +104,17 @@ a {
 
 a:hover {
   color: var(--primary-text-color);
+}
+
+.link-class {
+  font-size: var(--text-base);
+  text-decoration: none;
+  color: var(--link-text-color);
+  border-bottom: 1px solid var(--link-text-color);
+  display: inline-block;
+}
+
+.link-class:hover {
+  color: var(--primary-text-color);
+  border-bottom: 1px solid var(--primary-text-color);
 }
