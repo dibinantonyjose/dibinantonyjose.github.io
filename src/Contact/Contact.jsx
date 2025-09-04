@@ -14,29 +14,59 @@ function Contact() {
   return (
     <section>
       <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, assumenda
-        voluptas! Asperiores quas facilis dolorum eligendi!
+        Feel free to reach out to me at{" "}
+        <a href="mailto:dibinantonyjose@gmail.com">dibinantonyjose@gmail.com</a>{" "}
+        or connect with me on the socials below — always happy to chat,
+        collaborate, or just exchange ideas.
       </p>
       <div className="contact-list">
-        <a href="">
+        <a
+          href="https://www.linkedin.com/in/dibinantonyjose/"
+          target="_blank"
+          rel="noreferrer"
+        >
           <FontAwesomeIcon icon={faLinkedinIn} />
         </a>
-        <a href="">
+        <a
+          href="https://github.com/dibinantonyjose"
+          target="_blank"
+          rel="noreferrer"
+        >
           <FontAwesomeIcon icon={faGithub} />
         </a>
-        <a href="">
+        <a
+          href="https://twitter.com/dibinantonyjose"
+          target="_blank"
+          rel="noreferrer"
+        >
           <FontAwesomeIcon icon={faTwitter} />
         </a>
-        <a href="">
+        <a
+          href="https://stackoverflow.com/users/11405308/dibinantonyjose"
+          target="_blank"
+          rel="noreferrer"
+        >
           <FontAwesomeIcon icon={faStackOverflow} />
         </a>
-        <a href="">
+        <a
+          href="https://www.goodreads.com/dibinantonyjose"
+          target="_blank"
+          rel="noreferrer"
+        >
           <FontAwesomeIcon icon={faGoodreads} />
         </a>
-        <a href="">
+        <a
+          href="https://www.imdb.com/user/ur144606862/"
+          target="_blank"
+          rel="noreferrer"
+        >
           <FontAwesomeIcon icon={faImdb} />
         </a>
-        <a href="">
+        <a
+          href="https://www.instagram.com/dibinantonyjose/"
+          target="_blank"
+          rel="noreferrer"
+        >
           <FontAwesomeIcon icon={faInstagram} />
         </a>
       </div>

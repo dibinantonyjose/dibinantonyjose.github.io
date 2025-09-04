@@ -4,7 +4,7 @@ p {
 
 .landing {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   gap: 50px;
   align-items: center;
 }
@@ -19,6 +19,25 @@ p {
 .landing p {
   font-style: italic;
   text-align: center;
-  flex-grow: 1;
   color: var(--secondary-text-color);
+}
+
+@media (max-width: 768px) {
+  .landing {
+    display: block;
+    text-align: center;
+  }
+
+  .landing img {
+    width: 255px;
+    height: 255px;
+    border-radius: 50%;
+    margin: 0px auto;
+  }
+
+  .landing p {
+    font-style: italic;
+    text-align: center;
+    font-size: 1.2rem;
+  }
 }
