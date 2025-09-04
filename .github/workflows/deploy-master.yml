@@ -1,7 +1,8 @@
 name: Build and Deploy
 on:
-  tags:
-    - "v*"
+  push:
+    branches:
+      - "master"
 permissions:
   contents: write
 jobs:
@@ -10,14 +11,17 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
+
       - name: Configure Node
         uses: actions/setup-node@v1
         with:
           node-version: "22.17.1"
+
       - name: Install
         run: |
           npm ci
           npm run build
+
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
