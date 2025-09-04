@@ -1,0 +1,43 @@
+p {
+  margin: 20px 5px;
+}
+
+.landing {
+  display: flex;
+  justify-content: space-around;
+  gap: 50px;
+  align-items: center;
+}
+
+.landing img {
+  width: 290px;
+  height: 290px;
+  border-radius: 50%;
+  padding: 22px;
+}
+
+.landing p {
+  font-style: italic;
+  text-align: center;
+  color: var(--secondary-text-color);
+}
+
+@media (max-width: 768px) {
+  .landing {
+    display: block;
+    text-align: center;
+  }
+
+  .landing img {
+    width: 255px;
+    height: 255px;
+    border-radius: 50%;
+    margin: 0px auto;
+  }
+
+  .landing p {
+    font-style: italic;
+    text-align: center;
+    font-size: 1.2rem;
+  }
+}
