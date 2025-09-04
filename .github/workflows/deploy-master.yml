@@ -1,7 +1,7 @@
 name: Build and Deploy
 on:
-  release:
-    types: [published]
+  tags:
+    - "v*"
 permissions:
   contents: write
 jobs:
