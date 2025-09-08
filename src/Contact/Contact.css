@@ -1,4 +1,4 @@
-.contact-list {
+ul {
   display: flex;
   gap: 20px;
   justify-content: space-around;
@@ -6,6 +6,10 @@
   padding: 20px;
 }
 
-.contact-list a {
+ul li {
+  list-style-type: none;
+}
+
+ul li a {
   font-size: 1.6rem;
 }

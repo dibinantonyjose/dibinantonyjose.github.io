@@ -6,16 +6,16 @@ function Header() {
     <header>
       <nav>
         <h1>Dibin Jose</h1>
-        <ul>
-          <Link to="/">
-            <li className="link-class">Home</li>
-          </Link>
-          <Link to="/projects">
-            <li className="link-class">Projects</li>
-          </Link>
-          <Link to="/blogs">
-            <li className="link-class">Blogs</li>
-          </Link>
+        <ul aria-label="main navigation links">
+          <li className="link-class">
+            <Link to="/">Home</Link>
+          </li>
+          <li className="link-class">
+            <Link to="/projects">Projects</Link>
+          </li>
+          <li className="link-class">
+            <Link to="/blogs">Blogs</Link>
+          </li>
         </ul>
       </nav>
     </header>
