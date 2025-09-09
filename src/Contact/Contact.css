@@ -1,4 +1,4 @@
-ul {
+.social-contact-list {
   display: flex;
   gap: 20px;
   justify-content: space-around;
@@ -6,10 +6,21 @@ ul {
   padding: 20px;
 }
 
-ul li {
+.social-contact-list li {
   list-style-type: none;
+  transition: all 0.2s;
 }
 
-ul li a {
+.social-contact-list li:nth-child(even):hover {
+  color: var(--primary-text-color);
+  transform: rotate(20deg);
+}
+
+.social-contact-list li:nth-child(odd):hover {
+  color: var(--primary-text-color);
+  transform: rotate(-20deg);
+}
+
+.social-contact-list li a {
   font-size: 1.6rem;
 }

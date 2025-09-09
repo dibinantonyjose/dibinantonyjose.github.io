@@ -19,7 +19,7 @@ function Contact() {
         or connect with me on the socials below — always happy to chat,
         collaborate, or just exchange ideas.
       </p>
-      <ul role="main navigation links">
+      <ul role="navigation links" className="social-contact-list">
         <li>
           <a
             href="https://www.linkedin.com/in/dibinantonyjose/"

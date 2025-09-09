@@ -7,13 +7,13 @@ function Header() {
       <nav>
         <h1>Dibin Jose</h1>
         <ul aria-label="main navigation links">
-          <li className="link-class">
+          <li>
             <Link to="/">Home</Link>
           </li>
-          <li className="link-class">
+          <li>
             <Link to="/projects">Projects</Link>
           </li>
-          <li className="link-class">
+          <li>
             <Link to="/blogs">Blogs</Link>
           </li>
         </ul>
