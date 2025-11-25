@@ -1,5 +1,8 @@
+import Prism from "prismjs";
+import "prismjs/themes/prism-tomorrow.css";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import "./MdxPage.css";
 
 function MdxPage() {
   const { pathname } = useLocation();
@@ -16,12 +19,18 @@ function MdxPage() {
     loadContent();
   }, [filename, type]);
 
+  useEffect(() => {
+    if (Component) {
+      Prism.highlightAll();
+    }
+  }, [Component]);
+
   if (!Component) {
     return <div>Loading...</div>; // Don't render Component if it's null
   }
 
   return (
-    <section>
+    <section className="mdx-page">
       <p>{metaData.date}</p>
       <Component />
     </section>
