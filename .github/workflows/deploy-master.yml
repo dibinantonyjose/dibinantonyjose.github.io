@@ -15,12 +15,19 @@ jobs:
       - name: Configure Node
         uses: actions/setup-node@v1
         with:
-          node-version: "22.17.1"
+          node-version: "24.11.1"
 
-      - name: Install
+      - name: Install & Build
         run: |
           npm ci
           npm run build
+
+      - name: Ensure SPA fallback (create 404 + copy CNAME)
+        run: |
+          # create 404.html so GH Pages will serve index for unknown paths
+          cp -f dist/index.html dist/404.html
+          # If you use a custom domain, ensure CNAME is copied to dist
+          if [ -f public/CNAME ]; then cp -f public/CNAME dist/CNAME; fi
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
