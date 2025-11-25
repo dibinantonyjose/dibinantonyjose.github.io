@@ -1,10 +1,10 @@
 import { Route, Routes } from "react-router-dom";
-import Blogs from "./Blogs/Blogs";
-import Footer from "./components/Footer/Footer";
-import Header from "./components/Header/Header";
-import MdxPage from "./components/MdxPage/MdxPage";
+import Blogs from "./blogs/Blogs";
+import Footer from "./components/footer/Footer";
+import Header from "./components/header/Header";
+import MdxPage from "./components/mdxPage/MdxPage";
 import Home from "./Home";
-import Projects from "./Projects/Projects";
+import Projects from "./projects/Projects";
 
 function App() {
   return (
