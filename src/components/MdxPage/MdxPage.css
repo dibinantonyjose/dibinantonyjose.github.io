@@ -1,0 +1,120 @@
+.mdx-page {
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  line-height: 1.7;
+  color: #333;
+}
+
+.mdx-page > p:first-child {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+}
+
+.mdx-page h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #111;
+  line-height: 1.2;
+}
+
+.mdx-page h2 {
+  font-size: 2rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  color: #222;
+}
+
+.mdx-page h3 {
+  font-size: 1.5rem;
+  margin-top: 2rem;
+  margin-bottom: 0.8rem;
+  color: #333;
+}
+
+.mdx-page p {
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+
+.mdx-page a {
+  color: #0066cc;
+  text-decoration: none;
+  border-bottom: 1px solid #0066cc;
+  transition: color 0.2s;
+}
+
+.mdx-page a:hover {
+  color: #004499;
+  border-bottom-color: #004499;
+}
+
+.mdx-page ul,
+.mdx-page ol {
+  margin-bottom: 1.5rem;
+  padding-left: 2rem;
+}
+
+.mdx-page li {
+  margin-bottom: 0.5rem;
+}
+
+.mdx-page pre {
+  background: #1e1e1e;
+  padding: 1.5rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 2rem 0;
+  font-size: 0.95rem;
+}
+
+.mdx-page code {
+  font-family: "Fira Code", "Consolas", monospace;
+}
+
+.mdx-page :not(pre) > code {
+  background: #f4f4f4;
+  color: #e83e8c;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.mdx-page blockquote {
+  border-left: 4px solid #0066cc;
+  padding-left: 1.5rem;
+  margin: 2rem 0;
+  color: #555;
+  font-style: italic;
+}
+
+.mdx-page img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 2rem 0;
+}
+
+.mdx-page hr {
+  border: none;
+  border-top: 1px solid #e0e0e0;
+  margin: 3rem 0;
+}
+
+@media (max-width: 768px) {
+  .mdx-page {
+    padding: 1.5rem 1rem;
+  }
+
+  .mdx-page h1 {
+    font-size: 2rem;
+  }
+
+  .mdx-page h2 {
+    font-size: 1.6rem;
+  }
+
+  .mdx-page p {
+    font-size: 1rem;
+  }
+}
