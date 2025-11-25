@@ -1,0 +1,198 @@
+export const metaData = {
+  date: '25-November-2025',
+  title: "A Beginner’s Guide to Dotfiles: Managing and Version-Controlling Your Ubuntu Configuration",
+  description: "A beginner-friendly guide on what dotfiles are, why they matter, and how to safely version-control custom configurations in Ubuntu using a dotfiles folder, custom config files, and a setup.sh script."
+}
+
+# A Beginner’s Guide to Dotfiles: Managing and Version-Controlling Your Ubuntu Configuration
+
+Dotfiles are configuration files for programs. They define everything from your shell prompt and aliases to your editor preferences, keyboard shortcuts, themes, and command-line behaviors.
+They will play an important role in your career as a software developer.
+
+Dotfiles are named in a way such that each file and directory starts with a dot (.).
+On Unix-based systems, dotfiles are hidden by the operating system by default.
+
+## Some examples of dotfiles
+
+Some examples of dotfiles are:
+
+- _.vimrc_ (configurations of vim)
+- _.bashrc_ and _.profile_ (contain scripts that load each time you start a new terminal session and configure the shell)
+- _.gitconfig_ (configuration file in Git, primarily used to store global settings for a user)
+
+etc.
+
+> If the hidden files are not shown in the home directory, you can press Ctrl + H to display hidden files in Ubuntu.
+
+## Creating our version-controlled custom dotfiles
+
+Most guides about dotfiles tell you to replace your existing .bashrc with a symlink and put the file under version control, so that all your custom settings stay synced across machines. The problem is that when you set up a brand-new system—for example, a fresh Ubuntu installation—your custom .bashrc will completely overwrite the default one that comes with the system. This can remove useful defaults or cause unexpected issues.
+
+To avoid this, we’ll take a safer approach: instead of replacing the system’s .bashrc, we’ll create our own custom file and use a small shell script to make the existing .bashrc source our custom file. This way, you keep all the good defaults while still applying your personalized settings.
+
+Create a folder called `dotfiles` in your home directory:
+
+```bash
+mkdir dotfiles
+cd dotfiles
+```
+
+### .bashrc_custom
+
+Create our custom `.bashrc_custom` file in the dotfiles folder.
+
+```bash
+touch .bashrc_custom
+```
+
+Open the file with your preferred editor.
+Now you can add your custom configs or aliases in this custom bashrc file.
+For example, we will add some code to display the branch name in the terminal if it's a Git-initialized directory.
+
+```bash
+parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+
+# Only modify PS1 if it's already set
+if [ -n "$PS1" ]; then
+    PS1="${PS1}\[\033[01;33m\]\$(parse_git_branch)\[\033[00m\]"
+fi
+```
+
+### .profile_custom
+
+Let’s do the same for `.profile`.
+
+```bash
+touch .profile_custom
+```
+
+Open the file and add your configs.
+For example, we will set vim as the default editor:
+
+```bash
+export EDITOR=vim
+```
+
+### .gitconfig
+
+We will also create our own custom Git config.
+
+```bash
+touch .gitconfig
+```
+
+Add your custom config details. For example:
+
+```bash
+[user]
+  name = user_name
+  email = user_email
+[alias]
+  p = pull
+  a = add .
+  l = log --oneline
+  cm = commit -m
+```
+
+For `.gitconfig`, we’re not adding anything to the default file.
+Since the home `.gitconfig` may be empty when Git is installed for the first time, we will create a symlink for Git config.
+
+### setup.sh file
+
+This is the most important step. Until now, we have only created the files.
+**We haven't sourced anything yet or created any symlinks.**
+We will handle all of that using our custom `setup.sh` script.
+
+Create a file called `setup.sh` and make it executable.
+
+```bash
+touch setup.sh
+chmod +x setup.sh
+```
+
+Add the below bash script to the file:
+
+```bash
+#!/bin/bash
+
+echo "Setting up dotfiles..."
+
+echo "Setting up custom bashrc and profile..."
+
+# Setup custom bashrc
+# If the existing .bashrc doesn't contain our custom bashrc line, then we will add it.
+if ! grep -q "source ~/dotfiles/.bashrc_custom" ~/.bashrc; then
+    echo "" >> ~/.bashrc
+    echo "# Source custom configurations" >> ~/.bashrc
+    echo "if [ -f ~/dotfiles/.bashrc_custom ]; then" >> ~/.bashrc
+    echo "    source ~/dotfiles/.bashrc_custom" >> ~/.bashrc
+    echo "fi" >> ~/.bashrc
+    echo "✓ Added custom config to .bashrc"
+else
+    # If it's already there, we don't need to add it.
+    echo "✓ Custom config already in .bashrc"
+fi
+
+# Setup custom profile
+# Same logic as .bashrc_custom
+if ! grep -q "~/dotfiles/.profile_custom" ~/.profile; then
+    echo "" >> ~/.profile
+    echo "# Source custom profile" >> ~/.profile
+    echo "if [ -f ~/dotfiles/.profile_custom ]; then" >> ~/.profile
+    echo "    . ~/dotfiles/.profile_custom" >> ~/.profile
+    echo "fi" >> ~/.profile
+    echo "✓ Added custom config to .profile"
+else
+    echo "✓ Custom config already in .profile"
+fi
+
+source ~/.bashrc
+source ~/.profile
+
+echo "Setting up git config..."
+# Here we will create a symlink for .gitconfig
+ln -sf ~/dotfiles/.gitconfig ~/.gitconfig
+echo "Finished setting up git config."
+
+echo "Reload the terminal..."
+```
+
+After the script is run using:
+
+```bash
+./setup.sh
+```
+
+you will see your custom code added to `.bashrc` and `.profile` in your home directory.
+
+#### .bashrc
+
+```bash
+# Source custom configurations
+if [ -f ~/dotfiles/.bashrc_custom ]; then
+    source ~/dotfiles/.bashrc_custom
+fi
+```
+
+We are checking if the `.bashrc_custom` file exists, and if yes, we are sourcing it so that the configs in our custom file become available.
+
+#### .profile
+
+```bash
+# Source custom profile
+if [ -f ~/dotfiles/.profile_custom ]; then
+    . ~/dotfiles/.profile_custom
+fi
+```
+
+After this is done, we can initialize Git in the repository and push it to your remote server.
+
+Whenever we need our custom configuration on different systems or a new system, we just need to clone the dotfiles repo and run `setup.sh`.
+
+You can always add more custom configs or configs of other programs and push them to the repo.
+
+Feel free to connect with me to add any suggestions or to point out any mistakes.
+
+Have a good day!

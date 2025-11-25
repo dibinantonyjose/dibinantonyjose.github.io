@@ -1,7 +1,6 @@
-import Prism from "prismjs";
-import "prismjs/themes/prism-tomorrow.css";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import Prism from "../../config/prismSetup";
 import "./MdxPage.css";
 
 function MdxPage() {
