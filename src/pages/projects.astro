@@ -1,0 +1,50 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+interface Project {
+  name: string;
+  url: string;
+  description: string;
+  stack: string;
+  date: string;
+}
+
+const projects: Project[] = [
+  /*
+{
+    name: 'rate-shield',
+    url: 'https://github.com/dibinantonyjose/rate-shield',
+    description: 'A distributed rate limiter built on Redis with sliding window and token bucket algorithms. Designed for high-throughput API gateways.',
+    stack: 'Go, Redis, Docker',
+    date: 'Dec 2025',
+  },
+*/
+];
+---
+
+<BaseLayout
+  title="Projects — Dibin Jose"
+  description="Open source projects and tools by Dibin Jose."
+>
+  <h1>Projects</h1>
+  <p>Things I've built, mostly for learning and occasionally for usefulness.</p>
+
+  <ul class="project-list">
+    {
+      projects.map((project) => (
+        <li class="project-item">
+          <div class="project-name">
+            <a href={project.url} target="_blank" rel="noopener noreferrer">
+              {project.name}
+            </a>
+          </div>
+          <div class="project-desc">{project.description}</div>
+          <div class="project-meta">
+            <div class="project-stack">{project.stack}</div>
+            <div class="project-date">{project.date}</div>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>

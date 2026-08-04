@@ -1,10 +1,9 @@
-export const metaData = {
-  date: '25-November-2025',
-  title: "A Beginner’s Guide to Dotfiles: Managing and Version-Controlling Your Ubuntu Configuration",
-  description: "A beginner-friendly guide on what dotfiles are, why they matter, and how to safely version-control custom configurations in Ubuntu using a dotfiles folder, custom config files, and a setup.sh script."
-}
-
-# A Beginner’s Guide to Dotfiles: Managing and Version-Controlling Your Ubuntu Configuration
+---
+title: "A Beginner’s Guide to Dotfiles: Managing and Version-Controlling Your Ubuntu Configuration"
+date: 2025-11-25
+tags: ["Tech"]
+summary: "A beginner-friendly guide on what dotfiles are, why they matter, and how to safely version-control custom configurations in Ubuntu using a dotfiles folder, custom config files, and a setup.sh script."
+---
 
 Dotfiles are configuration files for programs. They define everything from your shell prompt and aliases to your editor preferences, keyboard shortcuts, themes, and command-line behaviors.
 They will play an important role in your career as a software developer.
@@ -192,7 +191,3 @@ After this is done, we can initialize Git in the repository and push it to your 
 Whenever we need our custom configuration on different systems or a new system, we just need to clone the dotfiles repo and run `setup.sh`.
 
 You can always add more custom configs or configs of other programs and push them to the repo.
-
-Feel free to connect with me to add any suggestions or to point out any mistakes.
-
-Have a good day!
