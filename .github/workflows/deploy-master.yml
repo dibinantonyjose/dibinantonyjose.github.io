@@ -28,6 +28,8 @@ jobs:
         run: |
           # create 404.html so GH Pages will serve index for unknown paths
           cp -f dist/index.html dist/404.html
+          # Prevent GitHub Pages from treating Astro's _astro directory as Jekyll content
+          touch dist/.nojekyll
           # If you use a custom domain, ensure CNAME is copied to dist
           if [ -f public/CNAME ]; then cp -f public/CNAME dist/CNAME; fi
 
