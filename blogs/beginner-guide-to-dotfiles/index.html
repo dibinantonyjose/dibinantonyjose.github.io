@@ -1,0 +1,123 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="A beginner-friendly guide on what dotfiles are, why they matter, and how to safely version-control custom configurations in Ubuntu using a dotfiles folder, custom config files, and a setup.sh script."><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" href="/favicon.ico"><meta name="generator" content="Astro v7.1.6"><title>A Beginner’s Guide to Dotfiles: Managing and Version-Controlling Your Ubuntu Configuration — Dibin Jose</title><link rel="stylesheet" href="/_astro/BaseLayout.BshYrkcZ.css"></head><body><header class="site-header container"><div class="site-name"><a href="/">Dibin Jose</a></div><nav class="site-nav" aria-label="Main navigation"><a href="/blogs" class="active">Blogs</a><a href="/projects">Projects</a></nav></header><main class="container"><article><header class="article-header"><h1 class="article-title">A Beginner’s Guide to Dotfiles: Managing and Version-Controlling Your Ubuntu Configuration</h1><div class="article-meta"><time datetime="2025-11-25">November 25, 2025</time><span>4 min read</span></div><div class="article-tags"><a class="tag" href="/blogs/tag/tech">Tech</a></div></header><div class="article-body"><p>Dotfiles are configuration files for programs. They define everything from your shell prompt and aliases to your editor preferences, keyboard shortcuts, themes, and command-line behaviors.
+They will play an important role in your career as a software developer.</p>
+<p>Dotfiles are named in a way such that each file and directory starts with a dot (.).
+On Unix-based systems, dotfiles are hidden by the operating system by default.</p>
+<h2 id="some-examples-of-dotfiles">Some examples of dotfiles</h2>
+<p>Some examples of dotfiles are:</p>
+<ul>
+<li><em>.vimrc</em> (configurations of vim)</li>
+<li><em>.bashrc</em> and <em>.profile</em> (contain scripts that load each time you start a new terminal session and configure the shell)</li>
+<li><em>.gitconfig</em> (configuration file in Git, primarily used to store global settings for a user)</li>
+</ul>
+<p>etc.</p>
+<blockquote>
+<p>If the hidden files are not shown in the home directory, you can press Ctrl + H to display hidden files in Ubuntu.</p>
+</blockquote>
+<h2 id="creating-our-version-controlled-custom-dotfiles">Creating our version-controlled custom dotfiles</h2>
+<p>Most guides about dotfiles tell you to replace your existing .bashrc with a symlink and put the file under version control, so that all your custom settings stay synced across machines. The problem is that when you set up a brand-new system—for example, a fresh Ubuntu installation—your custom .bashrc will completely overwrite the default one that comes with the system. This can remove useful defaults or cause unexpected issues.</p>
+<p>To avoid this, we’ll take a safer approach: instead of replacing the system’s .bashrc, we’ll create our own custom file and use a small shell script to make the existing .bashrc source our custom file. This way, you keep all the good defaults while still applying your personalized settings.</p>
+<p>Create a folder called <code>dotfiles</code> in your home directory:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">mkdir</span><span style="color:#9ECBFF"> dotfiles</span></span>
+<span class="line"><span style="color:#79B8FF">cd</span><span style="color:#9ECBFF"> dotfiles</span></span></code></pre>
+<h3 id="bashrc_custom">.bashrc_custom</h3>
+<p>Create our custom <code>.bashrc_custom</code> file in the dotfiles folder.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">touch</span><span style="color:#9ECBFF"> .bashrc_custom</span></span></code></pre>
+<p>Open the file with your preferred editor.
+Now you can add your custom configs or aliases in this custom bashrc file.
+For example, we will add some code to display the branch name in the terminal if it’s a Git-initialized directory.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">parse_git_branch</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#B392F0">    git</span><span style="color:#9ECBFF"> branch</span><span style="color:#F97583"> 2&gt;</span><span style="color:#9ECBFF"> /dev/null</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> sed</span><span style="color:#79B8FF"> -e</span><span style="color:#9ECBFF"> '/^[^*]/d'</span><span style="color:#79B8FF"> -e</span><span style="color:#9ECBFF"> 's/* \(.*\)/ (\1)/'</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Only modify PS1 if it's already set</span></span>
+<span class="line"><span style="color:#F97583">if</span><span style="color:#E1E4E8"> [ </span><span style="color:#F97583">-n</span><span style="color:#9ECBFF"> "</span><span style="color:#E1E4E8">$PS1</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8"> ]; </span><span style="color:#F97583">then</span></span>
+<span class="line"><span style="color:#E1E4E8">    PS1</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"${</span><span style="color:#E1E4E8">PS1</span><span style="color:#9ECBFF">}\[\033[01;33m\]</span><span style="color:#79B8FF">\$</span><span style="color:#9ECBFF">(parse_git_branch)\[\033[00m\]"</span></span>
+<span class="line"><span style="color:#F97583">fi</span></span></code></pre>
+<h3 id="profile_custom">.profile_custom</h3>
+<p>Let’s do the same for <code>.profile</code>.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">touch</span><span style="color:#9ECBFF"> .profile_custom</span></span></code></pre>
+<p>Open the file and add your configs.
+For example, we will set vim as the default editor:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#F97583">export</span><span style="color:#E1E4E8"> EDITOR</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">vim</span></span></code></pre>
+<h3 id="gitconfig">.gitconfig</h3>
+<p>We will also create our own custom Git config.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">touch</span><span style="color:#9ECBFF"> .gitconfig</span></span></code></pre>
+<p>Add your custom config details. For example:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#E1E4E8">[user]</span></span>
+<span class="line"><span style="color:#B392F0">  name</span><span style="color:#9ECBFF"> =</span><span style="color:#9ECBFF"> user_name</span></span>
+<span class="line"><span style="color:#B392F0">  email</span><span style="color:#9ECBFF"> =</span><span style="color:#9ECBFF"> user_email</span></span>
+<span class="line"><span style="color:#E1E4E8">[alias]</span></span>
+<span class="line"><span style="color:#B392F0">  p</span><span style="color:#9ECBFF"> =</span><span style="color:#9ECBFF"> pull</span></span>
+<span class="line"><span style="color:#B392F0">  a</span><span style="color:#9ECBFF"> =</span><span style="color:#9ECBFF"> add</span><span style="color:#9ECBFF"> .</span></span>
+<span class="line"><span style="color:#B392F0">  l</span><span style="color:#9ECBFF"> =</span><span style="color:#9ECBFF"> log</span><span style="color:#79B8FF"> --oneline</span></span>
+<span class="line"><span style="color:#B392F0">  cm</span><span style="color:#9ECBFF"> =</span><span style="color:#9ECBFF"> commit</span><span style="color:#79B8FF"> -m</span></span></code></pre>
+<p>For <code>.gitconfig</code>, we’re not adding anything to the default file.
+Since the home <code>.gitconfig</code> may be empty when Git is installed for the first time, we will create a symlink for Git config.</p>
+<h3 id="setupsh-file">setup.sh file</h3>
+<p>This is the most important step. Until now, we have only created the files.
+<strong>We haven’t sourced anything yet or created any symlinks.</strong>
+We will handle all of that using our custom <code>setup.sh</code> script.</p>
+<p>Create a file called <code>setup.sh</code> and make it executable.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">touch</span><span style="color:#9ECBFF"> setup.sh</span></span>
+<span class="line"><span style="color:#B392F0">chmod</span><span style="color:#9ECBFF"> +x</span><span style="color:#9ECBFF"> setup.sh</span></span></code></pre>
+<p>Add the below bash script to the file:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D">#!/bin/bash</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#79B8FF">echo</span><span style="color:#9ECBFF"> "Setting up dotfiles..."</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#79B8FF">echo</span><span style="color:#9ECBFF"> "Setting up custom bashrc and profile..."</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Setup custom bashrc</span></span>
+<span class="line"><span style="color:#6A737D"># If the existing .bashrc doesn't contain our custom bashrc line, then we will add it.</span></span>
+<span class="line"><span style="color:#F97583">if</span><span style="color:#F97583"> !</span><span style="color:#B392F0"> grep</span><span style="color:#79B8FF"> -q</span><span style="color:#9ECBFF"> "source ~/dotfiles/.bashrc_custom"</span><span style="color:#9ECBFF"> ~/.bashrc</span><span style="color:#E1E4E8">; </span><span style="color:#F97583">then</span></span>
+<span class="line"><span style="color:#79B8FF">    echo</span><span style="color:#9ECBFF"> ""</span><span style="color:#F97583"> &gt;&gt;</span><span style="color:#9ECBFF"> ~/.bashrc</span></span>
+<span class="line"><span style="color:#79B8FF">    echo</span><span style="color:#9ECBFF"> "# Source custom configurations"</span><span style="color:#F97583"> &gt;&gt;</span><span style="color:#9ECBFF"> ~/.bashrc</span></span>
+<span class="line"><span style="color:#79B8FF">    echo</span><span style="color:#9ECBFF"> "if [ -f ~/dotfiles/.bashrc_custom ]; then"</span><span style="color:#F97583"> &gt;&gt;</span><span style="color:#9ECBFF"> ~/.bashrc</span></span>
+<span class="line"><span style="color:#79B8FF">    echo</span><span style="color:#9ECBFF"> "    source ~/dotfiles/.bashrc_custom"</span><span style="color:#F97583"> &gt;&gt;</span><span style="color:#9ECBFF"> ~/.bashrc</span></span>
+<span class="line"><span style="color:#79B8FF">    echo</span><span style="color:#9ECBFF"> "fi"</span><span style="color:#F97583"> &gt;&gt;</span><span style="color:#9ECBFF"> ~/.bashrc</span></span>
+<span class="line"><span style="color:#79B8FF">    echo</span><span style="color:#9ECBFF"> "✓ Added custom config to .bashrc"</span></span>
+<span class="line"><span style="color:#F97583">else</span></span>
+<span class="line"><span style="color:#6A737D">    # If it's already there, we don't need to add it.</span></span>
+<span class="line"><span style="color:#79B8FF">    echo</span><span style="color:#9ECBFF"> "✓ Custom config already in .bashrc"</span></span>
+<span class="line"><span style="color:#F97583">fi</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Setup custom profile</span></span>
+<span class="line"><span style="color:#6A737D"># Same logic as .bashrc_custom</span></span>
+<span class="line"><span style="color:#F97583">if</span><span style="color:#F97583"> !</span><span style="color:#B392F0"> grep</span><span style="color:#79B8FF"> -q</span><span style="color:#9ECBFF"> "~/dotfiles/.profile_custom"</span><span style="color:#9ECBFF"> ~/.profile</span><span style="color:#E1E4E8">; </span><span style="color:#F97583">then</span></span>
+<span class="line"><span style="color:#79B8FF">    echo</span><span style="color:#9ECBFF"> ""</span><span style="color:#F97583"> &gt;&gt;</span><span style="color:#9ECBFF"> ~/.profile</span></span>
+<span class="line"><span style="color:#79B8FF">    echo</span><span style="color:#9ECBFF"> "# Source custom profile"</span><span style="color:#F97583"> &gt;&gt;</span><span style="color:#9ECBFF"> ~/.profile</span></span>
+<span class="line"><span style="color:#79B8FF">    echo</span><span style="color:#9ECBFF"> "if [ -f ~/dotfiles/.profile_custom ]; then"</span><span style="color:#F97583"> &gt;&gt;</span><span style="color:#9ECBFF"> ~/.profile</span></span>
+<span class="line"><span style="color:#79B8FF">    echo</span><span style="color:#9ECBFF"> "    . ~/dotfiles/.profile_custom"</span><span style="color:#F97583"> &gt;&gt;</span><span style="color:#9ECBFF"> ~/.profile</span></span>
+<span class="line"><span style="color:#79B8FF">    echo</span><span style="color:#9ECBFF"> "fi"</span><span style="color:#F97583"> &gt;&gt;</span><span style="color:#9ECBFF"> ~/.profile</span></span>
+<span class="line"><span style="color:#79B8FF">    echo</span><span style="color:#9ECBFF"> "✓ Added custom config to .profile"</span></span>
+<span class="line"><span style="color:#F97583">else</span></span>
+<span class="line"><span style="color:#79B8FF">    echo</span><span style="color:#9ECBFF"> "✓ Custom config already in .profile"</span></span>
+<span class="line"><span style="color:#F97583">fi</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#79B8FF">source</span><span style="color:#9ECBFF"> ~/.bashrc</span></span>
+<span class="line"><span style="color:#79B8FF">source</span><span style="color:#9ECBFF"> ~/.profile</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#79B8FF">echo</span><span style="color:#9ECBFF"> "Setting up git config..."</span></span>
+<span class="line"><span style="color:#6A737D"># Here we will create a symlink for .gitconfig</span></span>
+<span class="line"><span style="color:#B392F0">ln</span><span style="color:#79B8FF"> -sf</span><span style="color:#9ECBFF"> ~/dotfiles/.gitconfig</span><span style="color:#9ECBFF"> ~/.gitconfig</span></span>
+<span class="line"><span style="color:#79B8FF">echo</span><span style="color:#9ECBFF"> "Finished setting up git config."</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#79B8FF">echo</span><span style="color:#9ECBFF"> "Reload the terminal..."</span></span></code></pre>
+<p>After the script is run using:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">./setup.sh</span></span></code></pre>
+<p>you will see your custom code added to <code>.bashrc</code> and <code>.profile</code> in your home directory.</p>
+<h4 id="bashrc">.bashrc</h4>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># Source custom configurations</span></span>
+<span class="line"><span style="color:#F97583">if</span><span style="color:#E1E4E8"> [ </span><span style="color:#F97583">-f</span><span style="color:#F97583"> ~</span><span style="color:#E1E4E8">/dotfiles/.bashrc_custom ]; </span><span style="color:#F97583">then</span></span>
+<span class="line"><span style="color:#79B8FF">    source</span><span style="color:#9ECBFF"> ~/dotfiles/.bashrc_custom</span></span>
+<span class="line"><span style="color:#F97583">fi</span></span></code></pre>
+<p>We are checking if the <code>.bashrc_custom</code> file exists, and if yes, we are sourcing it so that the configs in our custom file become available.</p>
+<h4 id="profile">.profile</h4>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># Source custom profile</span></span>
+<span class="line"><span style="color:#F97583">if</span><span style="color:#E1E4E8"> [ </span><span style="color:#F97583">-f</span><span style="color:#F97583"> ~</span><span style="color:#E1E4E8">/dotfiles/.profile_custom ]; </span><span style="color:#F97583">then</span></span>
+<span class="line"><span style="color:#79B8FF">    .</span><span style="color:#9ECBFF"> ~/dotfiles/.profile_custom</span></span>
+<span class="line"><span style="color:#F97583">fi</span></span></code></pre>
+<p>After this is done, we can initialize Git in the repository and push it to your remote server.</p>
+<p>Whenever we need our custom configuration on different systems or a new system, we just need to clone the dotfiles repo and run <code>setup.sh</code>.</p>
+<p>You can always add more custom configs or configs of other programs and push them to the repo.</p>
+</div></article></main><footer class="site-footer container"><div class="footer-links"><span class="footer-email-wrapper"><a href="#copy-email" data-copy-email data-email="dibinantonyjose@gmail.com" aria-label="Copy email address">email</a><span id="copy-email-tip" class="footer-tip" role="status" aria-live="polite" hidden>email copied to clipboard</span></span><a href="https://www.linkedin.com/in/dibinantonyjose" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="https://github.com/dibinantonyjose" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://leetcode.com/u/dibinantonyjose/" target="_blank" rel="noopener noreferrer">LeetCode</a><a href="https://codeforces.com/profile/dibinantonyjose" target="_blank" rel="noopener noreferrer">Codeforces</a><a href="https://www.goodreads.com/user/show/199674093-dibi" target="_blank" rel="noopener noreferrer">goodreads</a><a href="https://www.imdb.com/user/p.4wiybmgj2ucakm2flg3xuk5dju" target="_blank" rel="noopener noreferrer">IMDB</a></div><div class="footer-copy">&copy; 2026 dibinantonyjose</div></footer><script type="module">var e=document.querySelector(`[data-copy-email]`),t=document.getElementById(`copy-email-tip`),n;e&&t&&e.addEventListener(`click`,async r=>{r.preventDefault();let i=e.getAttribute(`data-email`)||``;try{await navigator.clipboard.writeText(i),t.textContent=`email copied to clipboard`,t.hidden=!1}catch{t.textContent=`Clipboard access is unavailable`,t.hidden=!1}clearTimeout(n),n=window.setTimeout(()=>{t.hidden=!0},2200)});</script><!-- Cloudflare Web Analytics --><script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon="{&quot;token&quot;: &quot;d7d2083e66da458d97fa949975b6ea09&quot;}"></script><!-- End Cloudflare Web Analytics --></body></html>
