@@ -446,10 +446,12 @@ th {
 
 .footer-links {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-md) var(--spacing-lg);
   margin-bottom: var(--spacing-sm);
+  max-width: 100%;
 }
 
 .footer-email-wrapper {
@@ -512,5 +514,15 @@ th {
   .site-header {
     flex-direction: column;
     gap: var(--spacing-sm);
+  }
+
+  .footer-links {
+    gap: 0.45rem 0.9rem;
+    line-height: 1.6;
+  }
+
+  .footer-links a,
+  .footer-copy {
+    font-size: 0.82rem;
   }
 }
