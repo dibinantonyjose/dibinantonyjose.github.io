@@ -1,0 +1,38 @@
+---
+import { getCollection } from "astro:content";
+import PostList from "../components/PostList.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const allPosts = await getCollection("blogs");
+const recentPosts = allPosts
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 5);
+---
+
+<BaseLayout title="Dibin Jose">
+  <section class="section">
+    <p>
+      I work as a software engineer, but I consider myself a student of computer
+      science above all else. My true curiosity didn't wake up until after I
+      finished my degree. Once it did, there was no going back. I’ve spent every
+      year since continuously studying, diving deep into low-level mechanics,
+      and building a ground-up understanding of software systems.
+    </p>
+    <p>
+      Outside of software, I prefer to keep life simple and moving. You’ll
+      usually find me on a bike, playing football or badminton, or traveling
+      when I get the chance. Downtime is usually reserved for good books and
+      cinema.
+    </p>
+    <p>
+      You’ll find writing here on life beyond the terminal. It’s an unfiltered
+      testing ground for thoughts, stories, and whatever I’m currently curious
+      about.
+    </p>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Recent Writing</h2>
+    <PostList posts={recentPosts} />
+  </section>
+</BaseLayout>

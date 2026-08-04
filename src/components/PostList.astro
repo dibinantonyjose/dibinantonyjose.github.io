@@ -1,0 +1,41 @@
+---
+interface Post {
+  id: string;
+  data: {
+    title: string;
+    date: Date;
+    tags: string[];
+    summary: string;
+  };
+}
+
+interface Props {
+  posts: Post[];
+}
+
+const { posts } = Astro.props;
+
+function formatDate(date: Date): string {
+  return date.toISOString().slice(0, 10);
+}
+---
+
+<ul class="post-list">
+  {
+    posts.map((post) => (
+      <li class="post-item">
+        <span class="post-date">{formatDate(post.data.date)}</span>
+        <span class="post-title-link">
+          <a href={`/blogs/${post.id}`}>{post.data.title}</a>
+        </span>
+        <span class="post-tags">
+          {post.data.tags.map((tag) => (
+            <a class="tag" href={`/blogs/tag/${tag.toLowerCase()}`}>
+              {tag}
+            </a>
+          ))}
+        </span>
+      </li>
+    ))
+  }
+</ul>

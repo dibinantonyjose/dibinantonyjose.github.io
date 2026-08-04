@@ -1,0 +1,91 @@
+---
+const year = new Date().getFullYear();
+const emailAddress = "dibinantonyjose@gmail.com";
+---
+
+<footer class="site-footer container">
+  <div class="footer-links">
+    <span class="footer-email-wrapper">
+      <a
+        href="#copy-email"
+        data-copy-email
+        data-email={emailAddress}
+        aria-label="Copy email address"
+      >
+        email
+      </a>
+      <span
+        id="copy-email-tip"
+        class="footer-tip"
+        role="status"
+        aria-live="polite"
+        hidden
+      >
+        email copied to clipboard
+      </span>
+    </span>
+    <a
+      href="https://www.linkedin.com/in/dibinantonyjose"
+      target="_blank"
+      rel="noopener noreferrer">LinkedIn</a
+    >
+    <a
+      href="https://github.com/dibinantonyjose"
+      target="_blank"
+      rel="noopener noreferrer">GitHub</a
+    >
+    <a
+      href="https://leetcode.com/u/dibinantonyjose/"
+      target="_blank"
+      rel="noopener noreferrer">LeetCode</a
+    >
+    <a
+      href="https://codeforces.com/profile/dibinantonyjose"
+      target="_blank"
+      rel="noopener noreferrer">Codeforces</a
+    >
+    <a
+      href="https://www.goodreads.com/user/show/199674093-dibi"
+      target="_blank"
+      rel="noopener noreferrer">goodreads</a
+    >
+    <a
+      href="https://www.imdb.com/user/p.4wiybmgj2ucakm2flg3xuk5dju"
+      target="_blank"
+      rel="noopener noreferrer">IMDB</a
+    >
+  </div>
+  <div class="footer-copy">&copy; {year} dibinantonyjose</div>
+</footer>
+
+<script>
+  const copyEmailLink = document.querySelector("[data-copy-email]");
+  const copyEmailTip = document.getElementById("copy-email-tip");
+
+  // Scoped timeout variable (fixes the TypeScript window error)
+  let copyEmailTipTimeout: number | undefined;
+
+  if (copyEmailLink && copyEmailTip) {
+    copyEmailLink.addEventListener("click", async (event) => {
+      event.preventDefault();
+
+      // Read the email directly from the data-email attribute
+      const emailToCopy = copyEmailLink.getAttribute("data-email") || "";
+
+      try {
+        await navigator.clipboard.writeText(emailToCopy);
+        copyEmailTip.textContent = "email copied to clipboard";
+        copyEmailTip.hidden = false;
+      } catch {
+        copyEmailTip.textContent = "Clipboard access is unavailable";
+        copyEmailTip.hidden = false;
+      }
+
+      // Reset timer if clicked multiple times quickly
+      clearTimeout(copyEmailTipTimeout);
+      copyEmailTipTimeout = window.setTimeout(() => {
+        copyEmailTip.hidden = true;
+      }, 2200);
+    });
+  }
+</script>

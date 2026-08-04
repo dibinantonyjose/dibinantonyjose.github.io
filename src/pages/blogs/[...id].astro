@@ -1,0 +1,57 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection("blogs");
+  return allPosts.map((post) => ({
+    params: { id: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
+// Estimate reading time from rendered content body
+const wordCount = post.body ? post.body.split(/\s+/).length : 0;
+const readingTime = Math.max(1, Math.ceil(wordCount / 230));
+---
+
+<BaseLayout
+  title={`${post.data.title} — Dibin Jose`}
+  description={post.data.summary}
+>
+  <article>
+    <header class="article-header">
+      <h1 class="article-title">{post.data.title}</h1>
+      <div class="article-meta">
+        <time datetime={post.data.date.toISOString().slice(0, 10)}>
+          {formatDate(post.data.date)}
+        </time>
+        <span>{readingTime} min read</span>
+      </div>
+      <div class="article-tags">
+        {
+          post.data.tags.map((tag) => (
+            <a class="tag" href={`/blogs/tag/${tag.toLowerCase()}`}>
+              {tag}
+            </a>
+          ))
+        }
+      </div>
+    </header>
+
+    <div class="article-body">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

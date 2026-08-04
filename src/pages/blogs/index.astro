@@ -1,0 +1,33 @@
+---
+import { getCollection } from "astro:content";
+import PostList from "../../components/PostList.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const allPosts = await getCollection("blogs");
+const sortedPosts = allPosts.sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+const tags = ["All", ...new Set(allPosts.flatMap((post) => post.data.tags))];
+---
+
+<BaseLayout
+  title="Blog — Dibin Jose"
+  description="Writing on technology, travel, and stray thoughts."
+>
+  <h1>Blog</h1>
+
+  <nav class="tag-filter" aria-label="Filter by tag">
+    {
+      tags.map((tag) => (
+        <a
+          href={tag === "All" ? "/blogs" : `/blogs/tag/${tag.toLowerCase()}`}
+          class:list={[{ active: tag === "All" }]}
+        >
+          {tag}
+        </a>
+      ))
+    }
+  </nav>
+
+  <PostList posts={sortedPosts} />
+</BaseLayout>
